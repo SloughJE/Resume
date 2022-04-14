@@ -30,7 +30,9 @@ df_exp = pd.read_csv('professional_experience.csv')
 df_exp_timeline = create_timeline_df(df_exp)
 df_exp_timeline.sort_values('date',inplace=True)
 df_exp_timeline['dummy_column_for_size'] = 1
-
+del df_exp
+del df_list
+del df_tmp
 
 #app = JupyterDash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 #app = dash.Dash()
