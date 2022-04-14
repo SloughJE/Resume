@@ -19,7 +19,7 @@ def create_timeline_df(df):
         df_tmp = pd.DataFrame({'employer':employer,
                    'position':position,
                     'experience_type':experience_type,
-                   'date':pd.date_range(begin_date, end_date,freq='D')})
+                   'date':pd.date_range(begin_date, end_date,freq='M')})
         df_list.append(df_tmp)
 
     df = pd.concat(df_list)
