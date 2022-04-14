@@ -34,7 +34,10 @@ df_exp_timeline['dummy_column_for_size'] = 1
 
 
 #app = JupyterDash(__name__, external_stylesheets=[dbc.themes.DARKLY])
-app = dash.Dash()
+#app = dash.Dash()
+app = dash.Dash(__name__)
+server = app.server
+
 app.layout = html.Div([
     html.Div([
 
@@ -93,6 +96,6 @@ def update_graph(yaxis_column_name):
     fig.update_layout(showlegend=False)
 
     return fig
-    
+
 if __name__ == '__main__':
     app.run_server()
