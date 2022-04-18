@@ -38,17 +38,17 @@ tab_selected_style = {
 
 app.layout = html.Div([
     html.H1("John Slough's Resume"),
-    dcc.Tabs(id="tabs-example-graph", value='summary', children=[
+    dcc.Tabs(id="tabs-graph", value='summary', children=[
         dcc.Tab(label='Summary', value='summary',
                 style=tab_style, selected_style=tab_selected_style),
-        dcc.Tab(label='Experience', value='tab-1-example-graph',
+        dcc.Tab(label='Experience', value='tab-1-experience',
                 style=tab_style, selected_style=tab_selected_style),
-        dcc.Tab(label='Skills', value='tab-2-example-graph',
+        dcc.Tab(label='Skills', value='tab-2-skills',
                 style=tab_style, selected_style=tab_selected_style),
-        dcc.Tab(label='Interests', value='tab-3-example-graph',
+        dcc.Tab(label='Interests', value='tab-3-interests',
                 style=tab_style, selected_style=tab_selected_style),
     ]),
-    html.Div(id='tabs-content-example-graph')
+    html.Div(id='tabs-content')
 ])
 
 figSkills = px.line_polar(dfSkills, r='r', theta='theta', line_close=True)
@@ -81,8 +81,8 @@ figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False
 figInterests.update_layout(template='plotly_dark')
 
 
-@app.callback(Output('tabs-content-example-graph', 'children'),
-              Input('tabs-example-graph', 'value'))
+@app.callback(Output('tabs-content', 'children'),
+              Input('tabs-graph', 'value'))
 
 def render_content(tab):
 
@@ -116,21 +116,20 @@ def render_content(tab):
                               html.Div([
                                         html.H2('Senior Data Scientist'),
                                                 #className='display-6 col-9 mb-3 border-bottom pb-1'),
-                                        html.Div([
-                                                 html.P('with a broad base of experience, including extensive work in data analytics, machine learning, time series analysis, business report development, business intelligence (BI) dashboard creation, and data visualization for clients from a variety of industries.')
+                                        html.Div([html.P('with a broad base of experience, including extensive work in data analytics, machine learning, time series analysis, business report development, business intelligence (BI) dashboard creation, and data visualization for clients from a variety of industries.')
                                                  ],className='col-10 px-3 border-bottom pb-1'),
 
-                                        html.Div([#html.H3('Experience, Education, Skills'),
-                                                html.P(''),    html.Div(
-                                                    className="trend",
+                                        html.Div([html.P(''),html.Div(
+                                                    className="summary_list",
                                                     children=[
-                                                        html.Ul(id='summary-list', children=[html.Li('Over 6 years experience as a professional Data Scientist'),
-                                                                                             html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
-                                                                                             html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
-                                                                                             html.Li(['Writings: ',html.Ul(id='writings',children=[html.Li([html.A("A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://arc.aiaa.org/doi/10.2514/6.2021-2402"),
-                                                                                                      html.A(" (NASA Presentation)",href="https://ntrs.nasa.gov/citations/20210017655")]),
-                                                                                                      html.Li([html.A("A Novel Statistical Method for Financial Fraud Detection: dimension reduction, clustering, and fraud ranking", href = "https://drive.google.com/file/d/1nXtUFrLWF6iHH1aawxe_xgZZpWYvQb0s/view?usp=sharing")]),
-                                                                                                      html.Li("Practical Implications of the Evolutionary Psychology Model of the Use of an Information System ")])])])
+                                                        html.Ul(id='summary-list',
+                                                        children=[html.Li('Over 6 years experience as a professional Data Scientist'),
+                                                                     html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
+                                                                     html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
+                                                                     html.Li(['Writings: ',html.Ul(id='writings',children=[html.Li([html.A("A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://arc.aiaa.org/doi/10.2514/6.2021-2402"),
+                                                                              html.A(" (NASA Presentation)",href="https://ntrs.nasa.gov/citations/20210017655")]),
+                                                                              html.Li([html.A("A Novel Statistical Method for Financial Fraud Detection: dimension reduction, clustering, and fraud ranking", href = "https://drive.google.com/file/d/1nXtUFrLWF6iHH1aawxe_xgZZpWYvQb0s/view?usp=sharing")]),
+                                                                              html.Li("Practical Implications of the Evolutionary Psychology Model of the Use of an Information System ")])])])
                                                     ],
                                                 ),
                                                  ],className='col-12 mt-0 align-content-start')
@@ -138,14 +137,14 @@ def render_content(tab):
                              ], className='row mt-4 bg-dark rounded pt-2'),
                  ],className='container'
                 )
-    elif tab == 'tab-1-example-graph':
+    elif tab == 'tab-1-experience':
         return html.Div([
             html.H3('Experience Timeline'),
             dcc.Graph(
                 figure=figExp
             )
         ])
-    elif tab == 'tab-2-example-graph':
+    elif tab == 'tab-2-skills':
         return html.Div([
             html.H3('Skills'),
             dcc.Graph(
@@ -153,7 +152,7 @@ def render_content(tab):
                 figure=figSkills
             )
         ])
-    elif tab == 'tab-3-example-graph':
+    elif tab == 'tab-3-interests':
         return html.Div([
             html.H3('Interests'),
             dcc.Graph(
