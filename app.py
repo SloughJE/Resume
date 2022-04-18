@@ -85,8 +85,6 @@ figInterests.update_layout(template='plotly_dark')
               Input('tabs-example-graph', 'value'))
 
 def render_content(tab):
-    trends = ['Over 7 years experience as a professional Data Scientist', 'Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management',
-              'DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree']
 
     if tab == 'summary':
         return html.Div([
@@ -126,7 +124,7 @@ def render_content(tab):
                                                 html.P(''),    html.Div(
                                                     className="trend",
                                                     children=[
-                                                        html.Ul(id='summary-list', children=[html.Li('Over 7 years experience as a professional Data Scientist'),
+                                                        html.Ul(id='summary-list', children=[html.Li('Over 6 years experience as a professional Data Scientist'),
                                                                                              html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
                                                                                              html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
                                                                                              html.Li(['Writings: ',html.Ul(id='writings',children=[html.Li([html.A("A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://arc.aiaa.org/doi/10.2514/6.2021-2402"),
