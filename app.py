@@ -128,7 +128,8 @@ def render_content(tab):
                                                                                              html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
                                                                                              html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
                                                                                              html.Li(['Writings: ',html.Ul(id='writings',children=[html.Li([html.A("A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://arc.aiaa.org/doi/10.2514/6.2021-2402"),
-                                                                                                      html.A(" (NASA Presentation)",href="https://ntrs.nasa.gov/citations/20210017655")]),html.Li("A Novel Statistical Method for Financial Fraud Detection: dimension reduction, clustering, and fraud ranking"), \
+                                                                                                      html.A(" (NASA Presentation)",href="https://ntrs.nasa.gov/citations/20210017655")]),
+                                                                                                      html.Li([html.A("A Novel Statistical Method for Financial Fraud Detection: dimension reduction, clustering, and fraud ranking", href = "https://drive.google.com/file/d/1nXtUFrLWF6iHH1aawxe_xgZZpWYvQb0s/view?usp=sharing")]),
                                                                                                       html.Li("Practical Implications of the Evolutionary Psychology Model of the Use of an Information System ")])])])
                                                     ],
                                                 ),
