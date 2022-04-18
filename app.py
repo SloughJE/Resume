@@ -14,7 +14,7 @@ del df_exp
 
 #app = JupyterDash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 #app = dash.Dash()
-app = dash.Dash(__name__)
+app = dash.Dash(__name__,external_stylesheets=[dbc.themes.DARKLY])
 server = app.server
 
 tab_style = {
