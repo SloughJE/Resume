@@ -5,7 +5,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from src.utils import create_timeline_df
-from src.radar_charts import dfSkills, dfInterests
+from src.chart_data import dfSkills, dfInterests, dfMap
 
 df_exp = pd.read_csv('assets/professional_experience.csv')
 df_exp_timeline = create_timeline_df(df_exp)
@@ -45,7 +45,9 @@ app.layout = html.Div([
                 style=tab_style, selected_style=tab_selected_style),
         dcc.Tab(label='Skills', value='tab-2-skills',
                 style=tab_style, selected_style=tab_selected_style),
-        dcc.Tab(label='Interests', value='tab-3-interests',
+        dcc.Tab(label='Locations', value='tab-3-locations',
+                style=tab_style, selected_style=tab_selected_style),
+        dcc.Tab(label='Interests', value='tab-4-interests',
                 style=tab_style, selected_style=tab_selected_style),
     ]),
     html.Div(id='tabs-content')
@@ -62,8 +64,6 @@ figExp = px.scatter(data_frame = df_exp_timeline
            ,y = 'position', #title='Experience',
            color = 'experience_type',symbol='experience_type',
             hover_data=['organization','position','experience_type','location'],
-               #size='dummy_column_for_size',
-    #size_max=6
                 )
 figExp.update_traces(marker=dict(size=12,symbol='circle',
                           line=dict(width=0,
@@ -79,6 +79,41 @@ figInterests = px.line_polar(dfInterests, r='r', theta='theta', line_close=True)
 figInterests.update_traces(fill='toself')
 figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False)))
 figInterests.update_layout(template='plotly_dark')
+
+figMap = go.Figure(data=go.Choropleth(
+    locations = dfMap['Code'],
+    z = dfMap['color code'],
+    hoverinfo='location+text',
+    hovertext=dfMap['primary activity'],
+    colorscale=px.colors.sequential.Agsunset,
+    customdata=dfMap,
+    hovertemplate = 'Location: %{customdata[0]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+))
+
+figMap.update_layout(
+    title_text='Test',
+    geo=dict(
+        showframe=False,
+        showcountries = True,
+        showcoastlines=True)
+)
+
+figMap.add_trace(go.Choropleth(
+    locations = dfMap['Code'],
+    z = dfMap['color code'],
+    locationmode='USA-states',
+        hoverinfo='location+text',
+    hovertext=dfMap['primary activity'],
+            colorscale=px.colors.sequential.Agsunset,
+    customdata=dfMap,
+    hovertemplate = 'Location: %{customdata[0]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+    )
+)
+figMap.update_layout(margin=dict(l=0, r=0, b=0, t=0),
+                  #width=1200,
+                  #height=500,
+                     template='plotly_dark')
+figMap.update_traces(showscale=False)
 
 
 @app.callback(Output('tabs-content', 'children'),
@@ -152,11 +187,19 @@ def render_content(tab):
                 figure=figSkills
             )
         ])
-    elif tab == 'tab-3-interests':
+    elif tab == 'tab-3-locations':
+        return html.Div([
+            html.H3('Locations'),
+            dcc.Graph(
+                id='graph-3-tabs-dcc',
+                figure=figMap
+            )
+        ])
+    elif tab == 'tab-4-interests':
         return html.Div([
             html.H3('Interests'),
             dcc.Graph(
-                id='graph-3-tabs-dcc',
+                id='graph-4-tabs-dcc',
                 figure=figInterests
             )
         ])
