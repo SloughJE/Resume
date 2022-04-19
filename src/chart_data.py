@@ -10,5 +10,5 @@ dfInterests = pd.DataFrame(dict(
     theta=['Aerial Straps','Digital Assets, Bitcoin, Blockchain',
            'Latin Dance','Handbalancing', 'Travel', 'Music']))
 
-dfMap = pd.read_csv('..assets/locations.csv')
+dfMap = pd.read_csv('assets/locations.csv')
 dfMap.fillna('None',inplace=True)
