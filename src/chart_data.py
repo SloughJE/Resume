@@ -9,3 +9,6 @@ dfInterests = pd.DataFrame(dict(
     r=[10, 8, 5, 7, 8, 10],
     theta=['Aerial Straps','Digital Assets, Bitcoin, Blockchain',
            'Latin Dance','Handbalancing', 'Travel', 'Music']))
+
+dfMap = pd.read_csv('..assets/locations.csv')
+dfMap.fillna('None',inplace=True)

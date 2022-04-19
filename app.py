@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from src.utils import create_timeline_df
 from src.chart_data import dfSkills, dfInterests, dfMap
+import plotly.graph_objs as go
 
 df_exp = pd.read_csv('assets/professional_experience.csv')
 df_exp_timeline = create_timeline_df(df_exp)
