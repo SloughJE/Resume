@@ -88,7 +88,7 @@ figMap = go.Figure(data=go.Choropleth(
     hovertext=dfMap['primary activity'],
     colorscale=px.colors.sequential.Agsunset,
     customdata=dfMap,
-    hovertemplate = 'Location: %{customdata[0]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+    hovertemplate = 'Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
 ))
 
 figMap.update_layout(
@@ -107,7 +107,7 @@ figMap.add_trace(go.Choropleth(
     hovertext=dfMap['primary activity'],
             colorscale=px.colors.sequential.Agsunset,
     customdata=dfMap,
-    hovertemplate = 'Location: %{customdata[0]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+    hovertemplate = 'Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
     )
 )
 figMap.update_layout(margin=dict(l=0, r=0, b=0, t=0),

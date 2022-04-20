@@ -12,3 +12,5 @@ dfInterests = pd.DataFrame(dict(
 
 dfMap = pd.read_csv('assets/locations.csv')
 dfMap.fillna('None',inplace=True)
+dfCodes = pd.read_csv('assets/code_dict.csv')
+dfMap = pd.merge(dfMap,dfCodes,on='Code',how='left')
