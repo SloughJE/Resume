@@ -142,7 +142,12 @@ def render_content(tab):
                                                                        html.A('LinkedIn',href='https://www.linkedin.com/in/johneslough/',
                                                                               )
                                                                       ],className='d-block'
-                                                                     )
+                                                                     ),
+                                                            html.Span([html.I(className='fab fa-git'),
+                                                                       html.A('GitHub',href='https://github.com/SloughJE',
+                                                                              )
+                                                                      ],className='d-block'
+                                                                     ),
                                                              ],id='basic-info',
                                                             className='col-12 justify-content-start align-items-start pl-2 m-0'
                                                             )
@@ -152,14 +157,14 @@ def render_content(tab):
                               html.Div([
                                         html.H2('Senior Data Scientist'),
                                                 #className='display-6 col-9 mb-3 border-bottom pb-1'),
-                                        html.Div([html.P('with a broad base of experience, including extensive work in data analytics, machine learning, time series analysis, business report development, business intelligence (BI) dashboard creation, and data visualization for clients from a variety of industries.')
+                                        html.Div([html.P('with a broad base of experience, including extensive work in data visualization, machine learning, time series analysis, business report development, and business intelligence (BI) dashboard creation for clients from a variety of industries.')
                                                  ],className='col-10 px-3 border-bottom pb-1'),
 
                                         html.Div([html.P(''),html.Div(
                                                     className="summary_list",
                                                     children=[
                                                         html.Ul(id='summary-list',
-                                                        children=[html.Li('Over 6 years experience as a professional Data Scientist'),
+                                                        children=[html.Li('Over 7 years experience as a professional Data Scientist'),
                                                                      html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
                                                                      html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
                                                                      html.Li(['Writings: ',html.Ul(id='writings',children=[html.Li([html.A("A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://arc.aiaa.org/doi/10.2514/6.2021-2402"),
