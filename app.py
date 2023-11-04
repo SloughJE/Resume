@@ -155,7 +155,7 @@ def render_content(tab):
                                        ], className='jumbotron row col-5 p-4 mt-2'
                                       ),
                               html.Div([
-                                        html.H2('Senior Data Scientist'),
+                                        html.H2('Data Scientist'),
                                                 #className='display-6 col-9 mb-3 border-bottom pb-1'),
                                         html.Div([html.P('with a broad base of experience, including extensive work in data visualization, machine learning, time series analysis, business report development, and business intelligence (BI) dashboard creation for clients from a variety of industries.')
                                                  ],className='col-10 px-3 border-bottom pb-1'),
