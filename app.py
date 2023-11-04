@@ -180,7 +180,7 @@ def render_content(tab):
                 )
     elif tab == 'tab-1-experience':
         return html.Div([
-            html.H3('Experience Timeline'),
+            html.H3('Experience and Education Timeline'),
             dcc.Graph(
                 figure=figExp
             )
