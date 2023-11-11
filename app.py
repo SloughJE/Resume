@@ -52,67 +52,96 @@ app.layout = html.Div([
     html.Div(id='tabs-content')
 ])
 
+
+
+# skills spider chart
 figSkills = px.line_polar(dfSkills, r='r', theta='theta', line_close=True)
 figSkills.update_traces(fill='toself')
 figSkills.update_layout(polar = dict(radialaxis = dict(showticklabels = False)))
 figSkills.update_layout(template='plotly_dark')
 
-
-figExp = px.scatter(data_frame = df_exp_timeline
-           ,x = 'date'
-           ,y = 'position', #title='Experience',
-           color = 'experience_type',symbol='experience_type',
-            hover_data=['organization','position','experience_type','location'],
-                )
-figExp.update_traces(marker=dict(size=12,symbol='circle',
-                          line=dict(width=0,
-                                    color='DarkSlateGrey')),
-              selector=dict(mode='markers'))
-cat_order = df_exp_timeline.position.unique()
-figExp.update_yaxes(categoryorder='array', categoryarray= cat_order)
-figExp.update_layout(yaxis_title=None,xaxis_title=None)
-figExp.update_layout(template='plotly_dark')
-figExp.update_layout(showlegend=False)
-
+# interests spider chart
 figInterests = px.line_polar(dfInterests, r='r', theta='theta', line_close=True)
 figInterests.update_traces(fill='toself')
 figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False)))
 figInterests.update_layout(template='plotly_dark')
 
+
+
+# Experience Timeline
+
+
+color_discrete_map = {
+    "Job": "#005959",
+    "Education": "#f08080"
+}
+figExp = px.scatter(data_frame=df_exp_timeline, x='date', y='position',
+                    color='experience_type', symbol='experience_type',
+                    hover_data=['organization', 'position', 'experience_type', 'location'],
+                    color_discrete_map=color_discrete_map)
+
+figExp.update_traces(marker=dict(size=12, symbol='circle',
+                                 line=dict(width=0, color='DarkSlateGrey')),
+                     selector=dict(mode='markers'))
+cat_order = df_exp_timeline.position.unique()
+figExp.update_yaxes(categoryorder='array', categoryarray=cat_order)
+figExp.update_layout(yaxis_title=None, xaxis_title=None)
+figExp.update_layout(template='plotly_dark')
+figExp.update_layout(showlegend=False)
+
+
+
+######### MAP
+### color palette
+colors = ['#005959', '#f08080', '#e5c9aa']
+
+custom_color_scale = [
+    [0, colors[0]],   # Color for '0'
+    [0.5, colors[1]], # Color for '1'
+    [1, colors[2]]    # Color for '2'
+]
+
+# Your original code for the first Choropleth
 figMap = go.Figure(data=go.Choropleth(
-    locations = dfMap['Code'],
-    z = dfMap['color code'],
+    locations=dfMap['Code'],
+    z=dfMap['color code'],
     hoverinfo='location+text',
     hovertext=dfMap['primary activity'],
-    colorscale=px.colors.sequential.Agsunset,
+    colorscale=custom_color_scale,  # Updated to use the custom color scale
     customdata=dfMap,
-    hovertemplate = 'Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+    hovertemplate='Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
 ))
 
+# Your original layout update
 figMap.update_layout(
     title_text='Test',
     geo=dict(
         showframe=False,
-        showcountries = True,
-        showcoastlines=True)
-)
-
-figMap.add_trace(go.Choropleth(
-    locations = dfMap['Code'],
-    z = dfMap['color code'],
-    locationmode='USA-states',
-        hoverinfo='location+text',
-    hovertext=dfMap['primary activity'],
-            colorscale=px.colors.sequential.Agsunset,
-    customdata=dfMap,
-    hovertemplate = 'Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+        showcountries=True,
+        showcoastlines=True
     )
 )
+
+# Your original code for the second Choropleth, with the location mode specified for U.S. states
+figMap.add_trace(go.Choropleth(
+    locations=dfMap['Code'],
+    z=dfMap['color code'],
+    locationmode='USA-states',
+    hoverinfo='location+text',
+    hovertext=dfMap['primary activity'],
+    colorscale=custom_color_scale,  # Updated to use the custom color scale
+    customdata=dfMap,
+    hovertemplate='Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
+))
+
+# Your original update layout code
 figMap.update_layout(margin=dict(l=0, r=0, b=0, t=0),
-                  #width=1200,
-                  #height=500,
-                     template='plotly_dark')
+    template='plotly_dark'
+)
+
+# Your original update traces code
 figMap.update_traces(showscale=False)
+
 
 
 @app.callback(Output('tabs-content', 'children'),
