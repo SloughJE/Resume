@@ -37,7 +37,8 @@ tab_selected_style = {
 
 app.layout = html.Div([
     html.H1("John Slough's Resume"),
-    dcc.Tabs(id="tabs-graph", value='summary', children=[
+    dcc.Tabs(id="tabs-graph", value='summary', persistence=True, persisted_props=['value'], persistence_type='session', children=[
+
         dcc.Tab(label='Summary', value='summary',
                 style=tab_style, selected_style=tab_selected_style),
         dcc.Tab(label='Experience', value='tab-1-experience',
@@ -51,7 +52,6 @@ app.layout = html.Div([
     ]),
     html.Div(id='tabs-content')
 ])
-
 
 
 # skills spider chart
