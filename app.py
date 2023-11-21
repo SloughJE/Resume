@@ -54,11 +54,35 @@ app.layout = html.Div([
 ])
 
 
-# skills spider chart
+# Create the figure
 figSkills = px.line_polar(dfSkills, r='r', theta='theta', line_close=True)
+
+# Update traces with hover information
+figSkills.update_traces(hoverinfo='all', hovertemplate='<b>%{theta}</b>: %{r}<br>%{meta}')
+
+# Set the meta to the description column so it's used in the hovertemplate
+figSkills.update_traces(meta=dfSkills['description'])
 figSkills.update_traces(fill='toself')
-figSkills.update_layout(polar = dict(radialaxis = dict(showticklabels = False)))
-figSkills.update_layout(template='plotly_dark')
+
+# Update layout
+figSkills.update_layout(
+    polar=dict(radialaxis=dict(showticklabels=False, range=[0, 10])),
+    template='plotly_dark'
+)
+
+# Add invisible markers for the hover labels on the outermost points
+figSkills.add_scatterpolar(
+    r=[10]*len(dfSkills['theta']),
+    theta=dfSkills['theta'],
+    mode='markers',
+    marker=dict(size=1, color='rgba(0,0,0,0)'),  # Make markers invisible
+    hoverinfo='text',
+    hovertext=dfSkills['description'],
+    hovertemplate=dfSkills['description'],
+          name=''
+
+)
+
 
 # interests spider chart
 figInterests = px.line_polar(dfInterests, r='r', theta='theta', line_close=True)
