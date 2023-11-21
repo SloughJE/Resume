@@ -69,8 +69,6 @@ figInterests.update_layout(template='plotly_dark')
 
 
 # Experience Timeline
-
-
 color_discrete_map = {
     "Job": "#005959",
     "Education": "#f08080"
@@ -90,7 +88,6 @@ figExp.update_layout(template='plotly_dark')
 figExp.update_layout(showlegend=False)
 
 
-
 ######### MAP
 ### color palette
 colors = ['#005959', '#f08080', '#e5c9aa']
@@ -101,18 +98,15 @@ custom_color_scale = [
     [1, colors[2]]    # Color for '2'
 ]
 
-# Your original code for the first Choropleth
 figMap = go.Figure(data=go.Choropleth(
     locations=dfMap['Code'],
     z=dfMap['color code'],
     hoverinfo='location+text',
     hovertext=dfMap['primary activity'],
-    colorscale=custom_color_scale,  # Updated to use the custom color scale
+    colorscale=custom_color_scale,  
     customdata=dfMap,
     hovertemplate='Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
 ))
-
-# Your original layout update
 figMap.update_layout(
     title_text='Test',
     geo=dict(
@@ -122,24 +116,22 @@ figMap.update_layout(
     )
 )
 
-# Your original code for the second Choropleth, with the location mode specified for U.S. states
+# location mode for U.S. states
 figMap.add_trace(go.Choropleth(
     locations=dfMap['Code'],
     z=dfMap['color code'],
     locationmode='USA-states',
     hoverinfo='location+text',
     hovertext=dfMap['primary activity'],
-    colorscale=custom_color_scale,  # Updated to use the custom color scale
+    colorscale=custom_color_scale,  
     customdata=dfMap,
     hovertemplate='Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
 ))
 
-# Your original update layout code
 figMap.update_layout(margin=dict(l=0, r=0, b=0, t=0),
     template='plotly_dark'
 )
 
-# Your original update traces code
 figMap.update_traces(showscale=False)
 
 
