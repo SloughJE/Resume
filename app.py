@@ -21,7 +21,9 @@ tab_style = {
     'padding': '6px',
     'backgroundColor': '#000000',
     #'fontWeight': 'bold',
-    'color':'white'
+    'color':'white',
+    'fontSize': '24px'  
+
 }
 
 tab_selected_style = {
@@ -31,7 +33,7 @@ tab_selected_style = {
     'color': 'blue',
     'padding': '6px',
     'fontWeight': 'bold',
-
+    'fontSize': '24px'  
 }
 
 
@@ -41,7 +43,7 @@ app.layout = html.Div([
 
         dcc.Tab(label='Summary', value='summary',
                 style=tab_style, selected_style=tab_selected_style),
-        dcc.Tab(label='Experience', value='tab-1-experience',
+        dcc.Tab(label='Timeline', value='tab-1-experience',
                 style=tab_style, selected_style=tab_selected_style),
         dcc.Tab(label='Skills', value='tab-2-skills',
                 style=tab_style, selected_style=tab_selected_style),
@@ -54,41 +56,113 @@ app.layout = html.Div([
 ])
 
 
-# Create the figure
-figSkills = px.line_polar(dfSkills, r='r', theta='theta', line_close=True)
+# Convert 'Year' to float for fractional years
+dfSkills['Year'] = dfSkills['Year'].astype(float)
 
-# Update traces with hover information
-figSkills.update_traces(hoverinfo='all', hovertemplate='<b>%{theta}</b>: %{r}<br>%{meta}')
 
-# Set the meta to the description column so it's used in the hovertemplate
-figSkills.update_traces(meta=dfSkills['description'])
-figSkills.update_traces(fill='toself')
+# Create the animated plot
+figSkills = px.line_polar(dfSkills, r='Rating', theta='Skill', 
+                          line_close=True, 
+                          animation_frame='Year', 
+                          range_r=[0, 10],
+                          title=f"Year: 2023")
 
-# Update layout
+
+figSkills.update_traces(hoverinfo='all', fill='toself')
+
+# Update frames with formatted frame labels
+for frame in figSkills.frames:
+    year_str = frame.name
+    year_int_part = year_str.split('.')[0]  
+    title = f"Year: {year_int_part}"
+    frame.layout = go.Layout(
+        title_text=title,
+        title_font_size=30  
+    )
+
+# Update layout with reduced transition duration
 figSkills.update_layout(
-    polar=dict(radialaxis=dict(showticklabels=False, range=[0, 10])),
-    template='plotly_dark'
+    polar=dict(radialaxis=dict(showticklabels=True)),
+    template='plotly_dark',
+    width=800, height=600,
+    title_font_size=30,
+  
 )
 
-# Add invisible markers for the hover labels on the outermost points
-figSkills.add_scatterpolar(
-    r=[10]*len(dfSkills['theta']),
-    theta=dfSkills['theta'],
-    mode='markers',
-    marker=dict(size=1, color='rgba(0,0,0,0)'),  # Make markers invisible
-    hoverinfo='text',
-    hovertext=dfSkills['description'],
-    hovertemplate=dfSkills['description'],
-          name=''
+last_frame_num = int(len(figSkills.frames) -1)
+figSkills.layout['sliders'][0]['active'] = last_frame_num
+figSkills = go.Figure(data=figSkills['frames'][last_frame_num]['data'], frames=figSkills['frames'], layout=figSkills.layout)
+figSkills.update_traces(hoverinfo='all', fill='toself')
 
+# Update frames with formatted frame labels
+for frame in figSkills.frames:
+    year_str = frame.name
+    year_int_part = year_str.split('.')[0]  
+    title = f"Year: {year_int_part}"
+    frame.layout = go.Layout(
+        title_text=title,
+        title_font_size=30  
+    )
+
+# Update layout with reduced transition duration
+figSkills.update_layout(
+    polar=dict(radialaxis=dict(showticklabels=True)),
+    template='plotly_dark',
+    width=800, height=600,
+    title_font_size=30,
+  
 )
+
+
+# Check if sliders exist in the layout
+#for step, frame in zip(figSkills.layout.sliders[0].steps, figSkills.frames):
+#    step.label = frame.name.split('.')[0]  
+#    step.label = '' 
+
+#if 'sliders' in figSkills.layout:
+#    slider = figSkills.layout.sliders[0]  # Assuming you have only one slider
+#    slider.currentvalue.prefix = ''
+    # Modify the slider title text as desired
+    #slider['title'] = 'New Title Text'
+
+slider = figSkills.layout.sliders[0]  # Assuming you have only one slider
+for step, frame in zip(slider.steps, figSkills.frames):
+    # Modify the slider label as desired
+    slider.currentvalue.prefix = ""
+    step.label = ""
+
+figSkills.update_layout(
+    updatemenus=[
+        {
+            'buttons': [
+                {
+                    'args': [None, {"frame": {"duration": 50, "redraw": True},
+                                    "fromcurrent": True, "transition": {"duration": 300}}],
+                    'label': 'Play',
+                    'method': 'animate'
+                },
+                {
+                    'args': [[None], {"frame": {"duration": 0, "redraw": False},
+                                      "mode": "immediate",
+                                      "transition": {"duration": 0}}],
+                    'label': 'Pause',
+                    'method': 'animate'
+                }
+            ]
+        }
+    ]
+    
+)
+
 
 
 # interests spider chart
 figInterests = px.line_polar(dfInterests, r='r', theta='theta', line_close=True)
 figInterests.update_traces(fill='toself')
 figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False)))
-figInterests.update_layout(template='plotly_dark')
+figInterests.update_layout(template='plotly_dark',    
+                           width=800, height=600
+)
 
 
 
@@ -132,7 +206,7 @@ figMap = go.Figure(data=go.Choropleth(
     hovertemplate='Location: %{customdata[4]}'+'<br>Activity: %{customdata[2]}'+'<br>Additional Info: %{customdata[3]}'+'<extra></extra>'
 ))
 figMap.update_layout(
-    title_text='Test',
+    title_text='',
     geo=dict(
         showframe=False,
         showcountries=True,
@@ -153,7 +227,8 @@ figMap.add_trace(go.Choropleth(
 ))
 
 figMap.update_layout(margin=dict(l=0, r=0, b=0, t=0),
-    template='plotly_dark'
+    template='plotly_dark',
+        width=1200, height=600,
 )
 
 figMap.update_traces(showscale=False)
@@ -200,20 +275,31 @@ def render_content(tab):
                               html.Div([
                                         html.H2('Data Scientist'),
                                                 #className='display-6 col-9 mb-3 border-bottom pb-1'),
-                                        html.Div([html.P('with a broad base of experience, including extensive work in data visualization, machine learning, time series analysis, business report development, and business intelligence (BI) dashboard creation for clients from a variety of industries.')
+                                        html.Div([html.P('Over 8 years experience as a professional Data Scientist, with extensive work in machine learning, model deployment, data visualization, time series analysis, business report development, and business intelligence (BI) dashboard creation for clients from a variety of industries.')
                                                  ],className='col-10 px-3 border-bottom pb-1'),
 
                                         html.Div([html.P(''),html.Div(
                                                     className="summary_list",
                                                     children=[
                                                         html.Ul(id='summary-list',
-                                                        children=[html.Li('Over 7 years experience as a professional Data Scientist'),
-                                                                     html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
-                                                                     html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
-                                                                     html.Li(['Writings: ',html.Ul(id='writings',children=[html.Li([html.A("A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://arc.aiaa.org/doi/10.2514/6.2021-2402"),
-                                                                              html.A(" (NASA Presentation)",href="https://ntrs.nasa.gov/citations/20210017655")]),
-                                                                              html.Li([html.A("A Novel Statistical Method for Financial Fraud Detection: dimension reduction, clustering, and fraud ranking", href = "https://drive.google.com/file/d/1nXtUFrLWF6iHH1aawxe_xgZZpWYvQb0s/view?usp=sharing")]),
-                                                                              html.Li("Practical Implications of the Evolutionary Psychology Model of the Use of an Information System ")])])])
+                                                        children=[
+                                                                html.Li('Core Data Science Skills: Python, R, SQL, Data Visualization'),
+                                                                html.Li([
+                                                                    'Development & Deployment: Git, DVC, Docker, MLflow, fastAPI, AWS, GCP',
+                                                                    html.Ul([
+                                                                        html.Li([
+                                                                            'Personal Full Stack Data Science Project: ',
+                                                                            html.A('Aerial Straps Pose Classifier', href="https://github.com/SloughJE/aerial_straps_classifier"),
+                                                                        ])
+                                                                    ])
+                                                                ]),
+                                                                html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
+                                                                html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
+                                                                html.Li(['Writings: ',
+                                                                        html.Ul(id='writings',children=[
+                                                                            html.Li([html.A("NASA Research Paper: A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://aviationsystems.arc.nasa.gov/publications/2021/20210017594_Wesely_Aviation2021_paper.pdf")]),
+                                                                            html.Li([html.A("Thesis: A Novel Statistical Method for Financial Fraud Detection: dimension reduction, clustering, and fraud ranking", href = "https://drive.google.com/file/d/1nXtUFrLWF6iHH1aawxe_xgZZpWYvQb0s/view?usp=sharing")]),
+                                                                            html.Li("Thesis: Practical Implications of the Evolutionary Psychology Model of the Use of an Information System ")])])])
                                                     ],
                                                 ),
                                                  ],className='col-12 mt-0 align-content-start')
@@ -223,33 +309,37 @@ def render_content(tab):
                 )
     elif tab == 'tab-1-experience':
         return html.Div([
-            html.H3('Experience and Education Timeline'),
+            html.H2('Experience and Education Timeline', style={'padding-top': '30px','textAlign': 'center'}),
             dcc.Graph(
-                figure=figExp
+                figure=figExp,
+                style={'padding': '0px 100px'}
             )
         ])
     elif tab == 'tab-2-skills':
         return html.Div([
-            html.H3('Skills'),
+            html.H2('Evolution of Skills', style={'padding-top': '30px','textAlign': 'center'}),
             dcc.Graph(
                 id='graph-2-tabs-dcc',
-                figure=figSkills
+                figure=figSkills,
+                 style={'margin': '0 auto', 'width': '80%', 'max-width': '800px'}  # Center the chart and limit its width
             )
         ])
     elif tab == 'tab-3-locations':
         return html.Div([
-            html.H3('Locations'),
+            html.H2('Locations', style={'padding-top': '30px','textAlign': 'center'}),
             dcc.Graph(
                 id='graph-3-tabs-dcc',
-                figure=figMap
+                figure=figMap,
+                 style={'margin': '0 auto', 'width': '80%', 'max-width': '1200px'}  # Center the chart and limit its width
             )
         ])
     elif tab == 'tab-4-interests':
         return html.Div([
-            html.H3('Interests'),
+            html.H2('Interests', style={'padding-top': '30px','textAlign': 'center'}),
             dcc.Graph(
                 id='graph-4-tabs-dcc',
-                figure=figInterests
+                figure=figInterests,
+                 style={'margin': '0 auto', 'width': '80%', 'max-width': '800px'}  # Center the chart and limit its width
             )
         ])
 

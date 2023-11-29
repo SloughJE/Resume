@@ -2,7 +2,7 @@ Code,color code,primary activity,additional_info
 AL,0,travel,
 AZ,0,travel,
 AR,0,travel,
-CA,0,travel,
+CA,2,work,remote
 CO,0,travel,
 CT,0,travel,
 DE,0,travel,
@@ -32,7 +32,7 @@ WA,0,travel,
 WV,0,travel,
 WY,0,travel,
 IRL,1,study,Masters at UCD
-FRA,1,study,Masters at TBS
+FRA,1,study,Masters at TBS and intership at Alcatel-Lucent
 ESP,1,study,Learning Spanish
 CZE,2,work,Teaching English
 VNM,2,work,Teaching English
