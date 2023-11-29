@@ -110,9 +110,11 @@ figSkills.update_layout(
     template='plotly_dark',
     width=800, height=600,
     title_font_size=30,
+    
   
 )
 
+figSkills["layout"].pop("sliders")
 
 # Check if sliders exist in the layout
 #for step, frame in zip(figSkills.layout.sliders[0].steps, figSkills.frames):
@@ -125,11 +127,11 @@ figSkills.update_layout(
     # Modify the slider title text as desired
     #slider['title'] = 'New Title Text'
 
-slider = figSkills.layout.sliders[0]  # Assuming you have only one slider
-for step, frame in zip(slider.steps, figSkills.frames):
-    # Modify the slider label as desired
-    slider.currentvalue.prefix = ""
-    step.label = ""
+#slider = figSkills.layout.sliders[0]  # Assuming you have only one slider
+#for step, frame in zip(slider.steps, figSkills.frames):
+#    # Modify the slider label as desired
+#    slider.currentvalue.prefix = ""
+#    step.label = ""
 
 figSkills.update_layout(
     updatemenus=[
@@ -148,11 +150,18 @@ figSkills.update_layout(
                     'label': 'Pause',
                     'method': 'animate'
                 }
-            ]
+            ],
+            #'x': 0.05,  # Adjust the x position of the buttons
+            #'xanchor': 'right',  # Anchor the buttons to the right
+            #'y': 1.15,  # Adjust the y position of the buttons
+            #'yanchor': 'top',  # Anchor the buttons to the top
+            'font': dict(size=18),  # Increase font size
+            'borderwidth': 1,  # Increase border width
+            #'bgcolor': 'blue'  # Change button background color
         }
     ]
-    
 )
+
 
 
 
