@@ -308,8 +308,22 @@ def render_content(tab):
                                                                         ])
                                                                     ])
                                                                 ]),
-                                                                html.Li('Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
-                                                                html.Li('DeepLearning.AI TensorFlow Developer, Tableau Desktop Qualified Associate, JHU Data Science Specialization, Udacity Intro to Programming Nanodegree'),
+                                                                html.Li('Education: Masters in Statistics, MBA, MSc in Information & Communications Technology Business Management'),
+                                                                html.Li(['Certifications: ',
+                                                                    html.A('DeepLearning.AI TensorFlow Developer', 
+                                                                            href='https://www.coursera.org/account/accomplishments/professional-cert/EXYNLL3XS7GD?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=pdf_header_button&utm_product=prof', 
+                                                                            target='_blank'),
+                                                                    ', ',
+                                                                    html.A('JHU Data Science Specialization', 
+                                                                            href='https://www.coursera.org/account/accomplishments/specialization/certificate/MELWYQJL89EM', 
+                                                                            target='_blank'),
+                                                                    ', ',
+                                                                    html.A('Udacity Intro to Programming Nanodegree', 
+                                                                            href='https://confirm.udacity.com/TU9U4LLC', 
+                                                                            target='_blank'),
+                                                                            ', Tableau Desktop Qualified Associate',
+                                                                    ]),
+
                                                                 html.Li(['Writings: ',
                                                                         html.Ul(id='writings',children=[
                                                                             html.Li([html.A("NASA Research Paper: A Machine Learning Approach to Predict Aircraft Landing Times using Mediated Predictions from Existing Systems", href="https://aviationsystems.arc.nasa.gov/publications/2021/20210017594_Wesely_Aviation2021_paper.pdf")]),
