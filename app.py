@@ -4,13 +4,8 @@ import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
-from src.utils import create_timeline_df
-from src.chart_data import dfSkills, dfInterests, dfMap
+from src.chart_data import dfSkills, dfInterests, dfMap, df_exp_timeline
 import plotly.graph_objs as go
-
-df_exp = pd.read_csv('assets/professional_experience.csv')
-df_exp_timeline = create_timeline_df(df_exp)
-del df_exp
 
 
 app = dash.Dash(__name__,external_stylesheets=[dbc.themes.DARKLY])
@@ -69,7 +64,12 @@ figSkills = px.line_polar(dfSkills, r='Rating', theta='Skill',
 
 
 figSkills.update_traces(hoverinfo='all', fill='toself')
-
+figSkills.update_layout(
+    polar=dict(
+        radialaxis=dict(showticklabels=False),
+        angularaxis=dict(showticklabels=True, tickfont=dict(size=15))
+    )
+)
 # Update frames with formatted frame labels
 for frame in figSkills.frames:
     year_str = frame.name
@@ -157,21 +157,27 @@ figSkills.update_layout(
             #'yanchor': 'top',  # Anchor the buttons to the top
             'font': dict(size=18),  # Increase font size
             'borderwidth': 1,  # Increase border width
-            #'bgcolor': 'blue'  # Change button background color
+            'bgcolor': '#005959'  # Change button background color
         }
     ]
 )
 
-
+figSkills.update_layout(
+    polar=dict(
+        radialaxis=dict(showticklabels=False),
+        angularaxis=dict(showticklabels=True, tickfont=dict(size=15))
+    )
+)
 
 
 # interests spider chart
 figInterests = px.line_polar(dfInterests, r='r', theta='theta', line_close=True)
 figInterests.update_traces(fill='toself')
-figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False)))
+figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False),
+        angularaxis=dict(showticklabels=True, tickfont=dict(size=15))
+))
 figInterests.update_layout(template='plotly_dark',    
-                           width=800, height=600
-)
+                           width=800, height=600)
 
 
 
@@ -326,7 +332,7 @@ def render_content(tab):
         ])
     elif tab == 'tab-2-skills':
         return html.Div([
-            html.H2('Evolution of Skills', style={'padding-top': '30px','textAlign': 'center'}),
+            html.H2('Evolution of Data Science Skills', style={'padding-top': '30px','textAlign': 'center'}),
             dcc.Graph(
                 id='graph-2-tabs-dcc',
                 figure=figSkills,
