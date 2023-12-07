@@ -4,7 +4,9 @@ import numpy as np
 from .utils import transform_skills_data, create_timeline_df
 
 # skills data
-dfSkills = transform_skills_data("assets/skills.csv")
+csv_path = "assets/skills.csv"
+order_skills = ['Machine Learning', 'Python', 'ML Ops', 'DS Project Management', 'Data Visualization', 'R', 'Statistics']
+dfSkills = transform_skills_data(csv_path, num_steps=13, order_skills=order_skills)
 
 # Interests data
 dfInterests = pd.read_csv('assets/interests.csv')

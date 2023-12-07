@@ -35,7 +35,7 @@ def create_timeline_df(df):
     return timeline_df
 
 
-def transform_skills_data(csv_path, num_steps=13):
+def transform_skills_data(csv_path, num_steps=13, order_skills=None):
     """
     Transform and interpolate a DataFrame of skills data over time.
 
@@ -45,6 +45,7 @@ def transform_skills_data(csv_path, num_steps=13):
     Args:
         csv_path (str): Path to the CSV file to read.
         num_steps (int): Number of steps for interpolation between years.
+        order_skills (list, optional): List of skills in the desired order.
 
     Returns:
         pandas.DataFrame: Transformed DataFrame with interpolated values.
@@ -81,5 +82,12 @@ def transform_skills_data(csv_path, num_steps=13):
 
     df_interpolated = pd.DataFrame(new_rows)
     df_skills = pd.concat([df_skills, df_interpolated]).sort_values(by=['Year', 'Skill'])
+    
+    if order_skills:
+        # Create a categorical type with the specified order
+        skill_category = pd.Categorical(df_skills['Skill'], categories=order_skills, ordered=True)
+        df_skills['Skill'] = skill_category
+        df_skills.sort_values(by=['Year', 'Skill'], inplace=True)
+
 
     return df_skills

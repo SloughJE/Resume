@@ -56,7 +56,7 @@ dfSkills['Year'] = dfSkills['Year'].astype(float)
 
 
 # Create the animated plot
-figSkills = px.line_polar(dfSkills, r='Rating', theta='Skill', 
+figSkills = px.line_polar(dfSkills, r='Rating', theta='Skill',
                           line_close=True, 
                           animation_frame='Year', 
                           range_r=[0, 10],
@@ -165,7 +165,11 @@ figSkills.update_layout(
 figSkills.update_layout(
     polar=dict(
         radialaxis=dict(showticklabels=False),
-        angularaxis=dict(showticklabels=True, tickfont=dict(size=15))
+        angularaxis=dict(showticklabels=True, tickfont=dict(size=15),
+        #rotation=90,  # Adjust this angle to set the starting theta
+        #direction="counterclockwise"  # Change to 'clockwise' if needed
+            )
+        
     )
 )
 
