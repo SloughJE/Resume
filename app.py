@@ -164,7 +164,7 @@ figSkills.update_layout(
 
 figSkills.update_layout(
     polar=dict(
-        radialaxis=dict(showticklabels=False),
+        radialaxis=dict(showticklabels=False,showline=False),
         angularaxis=dict(showticklabels=True, tickfont=dict(size=15),
         #rotation=90,  # Adjust this angle to set the starting theta
         #direction="counterclockwise"  # Change to 'clockwise' if needed
@@ -177,7 +177,7 @@ figSkills.update_layout(
 # interests spider chart
 figInterests = px.line_polar(dfInterests, r='r', theta='theta', line_close=True)
 figInterests.update_traces(fill='toself')
-figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False),
+figInterests.update_layout(polar = dict(radialaxis = dict(showticklabels = False,showline=False),
         angularaxis=dict(showticklabels=True, tickfont=dict(size=15))
 ))
 figInterests.update_layout(template='plotly_dark',    
