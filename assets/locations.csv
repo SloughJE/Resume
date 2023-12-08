@@ -15,25 +15,26 @@ IN,0,travel,
 KY,0,travel,
 LA,0,travel,
 MD,0,travel,
+MS,0,travel,
 NV,0,travel,
 NJ,0,travel,
 NY,0,travel,
 NC,0,travel,
-ND,0,travel,
 OR,0,travel,
+OH,0,travel,
 PA,0,travel,
 RI,0,travel,
 SC,0,travel,
 TN,0,travel,
 TX,0,travel,
 VT,0,travel,
-VA,2,work,
+VA,2,work,study: MBA at VA Tech; BA at JMU
 WA,0,travel,
 WV,0,travel,
 WY,0,travel,
-IRL,1,study,Masters at UCD
-FRA,1,study,Masters at TBS and intership at Alcatel-Lucent
-ESP,1,study,Learning Spanish
+IRL,1,study,Masters in Statistics at UCD
+FRA,1,study,MSc in ICTBM at Telecom Business School and intership at Alcatel-Lucent
+ESP,1,study,Learning Spanish and travel
 CZE,2,work,Teaching English
 VNM,2,work,Teaching English
 CHE,1,study,Learning French
@@ -73,3 +74,4 @@ JAM,0,travel,
 LVA,0,travel,
 LTU,0,travel,
 CAN,0,travel,
+NLD,0,travel,
