@@ -60,7 +60,7 @@ figSkills = px.line_polar(dfSkills, r='Rating', theta='Skill',
                           line_close=True, 
                           animation_frame='Year', 
                           range_r=[0, 10],
-                          title=f"Year: 2023")
+                          title=f"Year: 2024")
 
 
 figSkills.update_traces(hoverinfo='all', fill='toself')
@@ -378,3 +378,4 @@ def render_content(tab):
 
 if __name__ == '__main__':
     app.run_server()
+# run locally with gunicorn app:server
