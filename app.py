@@ -262,7 +262,7 @@ def render_content(tab):
     if tab == 'summary':
         return html.Div([
                     html.Div([
-                              html.Div([html.Img(src='assets/john_res.png',
+                              html.Div([html.Img(src='assets/LinkedInModProfile.jpg',
                                                  className='d-none d-lg-flex img-thumbnail img-fluid col-6 p-0',
                                                  style=dict(width='216px', height='216px')
                                               ),
